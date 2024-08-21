@@ -6,13 +6,18 @@ package com.example.bookstore.model;
 
 import com.example.bookstore.model.key.CartBookKey;
 import com.example.bookstore.model.key.OrderBookKey;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import java.math.BigDecimal;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -20,11 +25,13 @@ import lombok.Data;
  */
 @Entity
 @Table(name = "cart_book")
-@Data
+@Setter
+@Getter
 public class CartBook {
 
     @EmbeddedId
-    private CartBookKey id;
+    @JsonIgnore
+    private CartBookKey id = new CartBookKey();
 
     @ManyToOne
     @MapsId("bookId")
@@ -35,4 +42,17 @@ public class CartBook {
     @MapsId("cartId")
     @JoinColumn(name = "cart_id")
     private Cart cart;
+    private Integer quantity;
+
+    public void addCartBook(Cart cart, Book book) {
+        this.cart = cart;
+        this.book = book;
+        cart.getCartBooks().add(this);
+        book.getCartBooks().add(this);
+    }
+
+    @Transient
+    public BigDecimal getTotal() {
+        return book.getOurPrice().multiply(BigDecimal.valueOf(quantity));
+    }
 }

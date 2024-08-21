@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Add Book</h1>
+        <form th:action="@{/book/addBook}" method="post" th:object="${book}" enctype="multipart/form-data">
+            Title: <input type="text" th:field="*{title}"></br>
+            Price: <input type="text" th:field="*{ourPrice}"></br>
+            Image: <input type="file" name="image" id="image" required/><br/>
+            <input type="submit" value="Add Book">
+        </form>
+    </body>
+</html>

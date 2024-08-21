@@ -4,6 +4,10 @@
  */
 package com.example.bookstore.config;
 
+import jakarta.persistence.EntityManager;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 public class ProjectConfig {
-    
 
-    
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setSkipNullEnabled(true);
+        return mapper;
+    }
 }

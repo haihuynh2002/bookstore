@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+    <head>
+    <div th:replace="~{common/app :: head}"></div>
+    <link th:href="@{/app/css/cart.css}" rel="stylesheet">
+
+</head>
+<body>
+    <div class="hero_area">
+        <header th:replace="~{common/app :: header}"></header>
+    </div>
+
+    <section class="shop_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="card" style="width:100%">
+                    <div class="card-header">
+                        <h1 class="h3 mb-0 text-gray-800">User</h1>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/user/update}" th:object="${user}" method="post" enctype="multipart/form-data">
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-6 col-form-label">
+                                    Email:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{email}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="firstName" class="col-sm-6 col-form-label">
+                                    First Name:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{firstName}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="lastName" class="col-sm-6 col-form-label">
+                                    Last Name:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{lastName}" placeholder="" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="age" class="col-sm-6 col-form-label">
+                                    Age:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{age}" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="gender" class="col-sm-6 col-form-label">
+                                    Gender:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{gender}" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-6 col-form-label">
+                                    Phone:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{phone}" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="image" class="col-sm-6 col-form-label">
+                                    Image:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="file" id="image" name="image" class="form-control" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section th:replace="~{common/app :: info}"></section>
+    <footer th:replace="~{common/app :: footer}"></footer>
+
+
+</body>
+
+</html>

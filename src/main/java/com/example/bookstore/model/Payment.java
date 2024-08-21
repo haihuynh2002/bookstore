@@ -10,15 +10,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author infoh
  */
 @Entity
-@Data
+@Setter
+@Getter
 public class Payment {
 
     @Id
@@ -37,7 +43,7 @@ public class Payment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "payment")
-    private Order order;
+    @OneToMany(mappedBy = "payment")
+    private List<Order> orders = new ArrayList<>();
 
 }

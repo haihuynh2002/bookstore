@@ -19,18 +19,26 @@ public class WebAuthorizationConfig {
     
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.formLogin(c -> c.loginPage("/auth/login")
-                .failureUrl("/auth/login?error")
-                .permitAll()
+        http.formLogin(form ->
+                form.loginPage("/auth/login")
+                .loginProcessingUrl("/auth/login")
         );
-        
-        http.logout(c -> c.logoutUrl("/auth/login?logout").permitAll());
-        
+
         http.csrf(c -> c.disable());
                 
         http.cors(c -> c.disable());
         
-        http.authorizeHttpRequests(c -> c.anyRequest().authenticated());
+        http.authorizeHttpRequests(c -> 
+                c.anyRequest().permitAll()
+//                c.requestMatchers("/home").hasRole("USER")
+//                .requestMatchers("/user/**").permitAll()
+//                .anyRequest().authenticated()
+        );
+        
+        http.logout(c -> c.logoutUrl("/auth/logout")
+                .logoutSuccessUrl("/")
+        );
+        
         return http.build();
     }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>User</h1>
+        <p th:if="${param.error}">Username or password is not found</p>
+        <p>Message: [[${message}]]</p>
+
+        <form th:action="@{/auth/login}" method="post" th:object="${user}">
+            Email: <input id="username" name="username">
+            Password: <input id="password" name="password">
+            <input type="submit" value="submit">
+        </form>
+        <a th:href="@{/auth/register}">Sign up</a>
+    </body>
+</html>

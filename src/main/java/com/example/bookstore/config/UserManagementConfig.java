@@ -4,10 +4,14 @@
  */
 package com.example.bookstore.config;
 
-import com.example.bookstore.CustomeUserDetailsService;
+import com.example.bookstore.model.CustomerUserDetails;
+import com.example.bookstore.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,13 +22,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class UserManagementConfig {
 
+    @Autowired
+    UserRepository ur;
+    
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomeUserDetailsService();
+        return email -> ur.findByEmail(email)
+                .map(CustomerUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("Username is not found"));
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+        return new BCryptPasswordEncoder();
     }
 }

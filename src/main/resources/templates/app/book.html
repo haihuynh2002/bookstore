@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head th:replace="~{common/app :: head}"></head>
+    <body>
+        <div class="hero_area">
+            <header th:replace="~{common/app :: header}"></header>
+        </div>
+        <!-- end hero area -->
+
+        <!-- shop section -->
+
+        <section class="shop_section layout_padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-3">
+                        <div class="list-group">
+                            <h6 class="h6 text-center">Category</h6>
+                            <a th:each="category: ${categories}"
+                               th:text="${category.name}"
+                               th:href="@{/book/search/category(id=${category.id})}"
+                               class="list-group-item list-group-item-action">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-8 col-lg-9">
+                        <div class="container">
+                            <div class="row">
+                                <div th:each="book: ${books}" class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="box">
+                                        <a th:href="@{/book/{id}(id=${book.id})}">
+                                            <div class="img-box">
+                                                <img th:src="@{${book.imageUrl}}" alt="">
+                                            </div>
+                                            <div class="detail-box">
+                                                <h6 th:text="${book.title}"></h6>
+                                                <h6>
+                                                    Price
+                                                    <span th:text="${book.ourPrice}"></span>
+                                                </h6>
+                                            </div>
+                                            <div class="new">
+                                                <span>
+                                                    New
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-box">
+                                <a href="">
+                                    More...
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- end shop section -->
+        <section th:replace="~{common/app :: info}"></section>
+        <footer th:replace="~{common/app :: footer}"></footer>
+
+
+    </body>
+
+</html>

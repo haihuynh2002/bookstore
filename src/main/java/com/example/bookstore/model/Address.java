@@ -4,6 +4,7 @@
  */
 package com.example.bookstore.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import lombok.Data;
 
@@ -12,7 +13,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -20,13 +29,17 @@ import jakarta.persistence.OneToOne;
  *
  */
 @Entity
-@Data
+@Setter
+@Getter
+@ToString
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String type;
+    private String address;
     private String street;
     private String city;
     private String province;
@@ -34,10 +47,9 @@ public class Address {
     private String zipcode;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "address")
-    private Order order;
-
+    @OneToMany(mappedBy = "address")
+    private List<Order> orders = new ArrayList<>();
 }

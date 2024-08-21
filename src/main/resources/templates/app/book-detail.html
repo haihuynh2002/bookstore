@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head th:replace="~{common/app :: head}"></head>
+    <body>
+        <div class="hero_area">
+            <header th:replace="~{common/app :: header}"></header>
+        </div>
+        <!-- end hero area -->
+
+        <!-- shop section -->
+
+        <section class="shop_section layout_padding pt-0">
+            <div class="container">
+                <section class="py-5">
+                    <div class="container px-4 px-lg-5 my-5">
+                        <div class="row gx-4 gx-lg-5 align-items-center">
+                            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{${book.imageUrl}}" alt="..." /></div>
+                            <div class="col-md-6">
+                                <div th:text="${book.author}" class="small mb-1"></div>
+                                <h1 th:text="${book.title}" class="display-5 fw-bolder"></h1>
+                                <div class="fs-5 mb-5">
+                                    <span>$45.00</span>
+                                    <span>$[[${book.ourPrice}]]</span>
+                                </div>
+                                <p th:text="${book.description}" class="lead"></p>
+
+                                <form th:action="@{/book/addCart(bookId = ${book.id})}"
+                                      method="post"
+                                      th:object="${cart}"
+                                      class="form-inline">
+                                    <input th:field="*{bookId}" value="${book.bookId}" hidden>
+                                    <input class="form-control text-center mb-2 mr-sm-2" type="number" value="1" style="max-width: 3rem"  th:field="*{quantity}">
+                                    <input class="btn btn-outline-dark mb-2 mr-sm-2" type="submit" value="Add To Cart">
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="py-5 bg-light">
+                    <div class="container px-4 px-lg-5 mt-5">
+                        <h2 class="fw-bolder mb-4">Related products</h2>
+                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                            <div class="col-md-4 col-lg-3">
+                                <div class="card h-100">
+                                    <!-- Product image-->
+                                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">Fancy Product</h5>
+                                            <!-- Product price-->
+                                            $40.00 - $80.00
+                                        </div>
+                                    </div>
+                                    <!-- Product actions-->
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="btn-box">
+                <a href="">
+                    More...
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- end shop section -->
+    <section th:replace="~{common/app :: info}"></section>
+    <footer th:replace="~{common/app :: footer}"></footer>
+
+
+</body>
+
+</html>

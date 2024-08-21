@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+    <head>
+    <div th:replace="~{common/app :: head}"></div>
+    <link th:href="@{/app/css/cart.css}" rel="stylesheet">
+
+</head>
+<body>
+    <div class="hero_area">
+        <header th:replace="~{common/app :: header}"></header>
+    </div>
+
+    <section class="shop_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="card" style="width:100%">
+                    <div class="card-header">
+                        <h1 class="h3 mb-0 text-gray-800">Address</h1>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/address/create}" th:object="${address}" method="post">
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-6 col-form-label">
+                                    name:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{name}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="type" class="col-sm-6 col-form-label">
+                                    type:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{type}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="address" class="col-sm-6 col-form-label">
+                                    address:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{address}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="street" class="col-sm-6 col-form-label">
+                                    street:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{street}" placeholder="" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="city" class="col-sm-6 col-form-label">
+                                    city:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{city}" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="province" class="col-sm-6 col-form-label">
+                                    province:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{province}" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="country" class="col-sm-6 col-form-label">
+                                    country:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{country}" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="zipcode" class="col-sm-6 col-form-label">
+                                    zipcode:
+                                </label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" th:field="*{zipcode}" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section th:replace="~{common/app :: info}"></section>
+    <footer th:replace="~{common/app :: footer}"></footer>
+
+
+</body>
+
+</html>

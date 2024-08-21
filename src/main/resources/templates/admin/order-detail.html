@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head th:replace="~{common/admin :: head}"></head>
+    <body id="page-top">
+
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+            <ul th:replace="~{common/admin :: sidebar}"></ul>
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <nav th:replace="~{common/admin :: navbar}"></nav>
+
+                    <!-- Begin Page Content -->
+                    <div class="container">
+                        <div class="card shadow-sm bg-white">
+                            <div class="card-header">
+                                <h1 class="h3 text-gray-800">Order Details</h1>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>Name</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>[[${order.user.firstName}]] [[${order.user.lastName}]]</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>Email</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <p th:text="${order.user.email}"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>Phone</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <p th:text="${order.user.phone}"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>Payment</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <p th:text="${order.payment.type}"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>Address</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <p th:text="${order.address.zipcode}"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>Total</p>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <p>$[[${order.total}]]</p>
+                                    </div>
+                                </div>
+                                <hr class="hr">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-stripped">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Book</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="ob: ${order.orderBooks}">
+                                                        <td th:text="${ob.book.title}"></td>
+                                                        <td th:text="${ob.quantity}"></td>
+                                                        <td th:text="${ob.price}"></td>
+                                                        <td th:text="${ob.total}"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{common/admin :: footer}"></div>
+</body>
+
+</html>
