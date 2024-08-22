@@ -69,14 +69,13 @@ public class UserService {
         );
     }
 
-    public User registerUser(RegistrationDto registrationDto) {
-        ur.findByEmail(registrationDto.getEmail()).ifPresent(user -> {
+    public User create(User user) {
+        ur.findByEmail(user.getEmail()).ifPresent(u -> {
             throw new RuntimeException("user exists");
         });
         Cart cart = new Cart();
-
-        User user = modelMapper.map(registrationDto, User.class);
-        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.addCart(cart);
         return ur.save(user);
     }
@@ -136,10 +135,5 @@ public class UserService {
 
     public void deleteById(Long id) {
         ur.deleteById(id);
-    }
-
-    public void create(UserDto userDto) {
-        User user = modelMapper.map(userDto, User.class);
-        ur.save(user);
     }
 }

@@ -6,12 +6,19 @@ package com.example.bookstore.dto;
 
 import com.example.bookstore.annotation.UniqueEmail;
 import com.example.bookstore.annotation.ValidEmail;
+import com.example.bookstore.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -26,8 +33,10 @@ public class UserDto {
     private String email;
     private String firstName;
     private String lastName;
-    private Integer age;
+    private String password;
+    private LocalDate birthday;
     private String gender;
     private String phone;
     private String imageUrl;
+    private List<Role> roles;
 }

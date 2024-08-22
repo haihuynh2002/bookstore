@@ -24,9 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Setter
 @Getter
 @AllArgsConstructor
-public class CustomerUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
+
     private User user;
-    
+
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -59,6 +60,9 @@ public class CustomerUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return user.getRoles().stream()
+                .map(Role::getName)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 }

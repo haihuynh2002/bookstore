@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminRoleKey {
+public class UserRoleKey {
     
     @Column(name = "admin_id")
     private Long adminId;

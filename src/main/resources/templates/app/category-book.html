@@ -18,7 +18,8 @@
                             <a th:each="category: ${categories}"
                                th:text="${category.name}"
                                th:href="@{/book/category(id=${category.id})}"
-                               class="list-group-item list-group-item-action">
+                               class="list-group-item list-group-item-action"
+                               th:classappend="${category.id == categoryId}? 'active':''">
                             </a>
                         </div>
                     </div>
@@ -48,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="btn-box">
-                                <a th:href="@{/book(page=${page})}">
+                                <a th:href="@{/book/category(id=${categoryId},page=${page})}">
                                     More...
                                 </a>
                             </div>

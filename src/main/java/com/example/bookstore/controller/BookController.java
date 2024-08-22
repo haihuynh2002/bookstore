@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,21 +40,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/book")
 public class BookController {
 
+    private static int PAGE_SIZE = 6;
+
     @Autowired
     BookService bs;
-    
+
     @Autowired
     UserService us;
-    
+
     @Autowired
     CategoryService cs;
 
     @GetMapping
-    public String books(Model model) {
-        List<BookDto> books = bs.findAll();
+    public String books(@RequestParam(name = "page", required = false, defaultValue = "0") Integer page, Model model) {
+        Pageable section = PageRequest.of(page, PAGE_SIZE);
+        List<BookDto> books = bs.findAll(section);
         List<Category> categories = cs.findAll();
         model.addAttribute("categories", categories);
         model.addAttribute("books", books);
+        model.addAttribute("page", ++page);
         return "app/book";
     }
 
@@ -73,7 +79,7 @@ public class BookController {
         bs.addCart(cartDto);
         return "redirect:/book";
     }
-    
+
     @GetMapping("/search")
     public String search(@RequestParam("query") String query, Model model) {
         List<Book> books = bs.searchByQuery(query);
@@ -82,16 +88,21 @@ public class BookController {
         model.addAttribute("categories", categories);
         return "app/book";
     }
-    
-    @GetMapping("/search/category")
-    public String search(@RequestParam("id") Long id, Model model) {
-        List<Book> books = bs.searchByCategory(id);
+
+    @GetMapping("/category")
+    public String category(@RequestParam("id") Long id,
+            @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+            Model model) {
+        Pageable section = PageRequest.of(page, PAGE_SIZE);
+        List<Book> books = bs.searchByCategory(id, section);
         List<Category> categories = cs.findAll();
         model.addAttribute("books", books);
         model.addAttribute("categories", categories);
-        return "app/book";
+        model.addAttribute("categoryId", id);
+        model.addAttribute("page", ++page);
+        return "app/category-book";
     }
-    
+
     @ExceptionHandler({BookAlreadyInCartException.class})
     public String handleException(BookAlreadyInCartException e, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         redirectAttributes.addFlashAttribute("error", e.getMessage());

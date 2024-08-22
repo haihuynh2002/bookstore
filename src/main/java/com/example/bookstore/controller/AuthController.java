@@ -8,10 +8,13 @@ import com.example.bookstore.dto.RegistrationDto;
 import com.example.bookstore.exception.ExpiredTokenException;
 import com.example.bookstore.exception.InvalidTokenException;
 import com.example.bookstore.exception.TokenException;
+import com.example.bookstore.model.Role;
 import com.example.bookstore.model.User;
 import com.example.bookstore.service.MailService;
+import com.example.bookstore.service.RoleService;
 import com.example.bookstore.service.UserService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,9 +36,15 @@ public class AuthController {
 
     @Autowired
     UserService us;
+    
+    @Autowired
+    RoleService rs;
 
     @Autowired
     MailService ms;
+    
+    @Autowired
+    ModelMapper modelMapper;
 
     @GetMapping("/login")
     public String login() {
@@ -56,8 +65,12 @@ public class AuthController {
         if (result.hasErrors()) {
             return "register";
         }
-        User user = us.registerUser(registrationDto);
-        ms.sendRegisterToken(user);
+        
+        User user = modelMapper.map(registrationDto, User.class);
+        Role userRole = rs.findByName("USER");
+        user.addRole(userRole);
+        User newUser = us.create(user);
+        ms.sendRegisterToken(newUser);
         return "redirect:/auth/login";
     }
 

@@ -6,6 +6,7 @@ package com.example.bookstore.repository;
 
 import com.example.bookstore.model.CategoryBook;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,4 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CategoryBookRepository extends JpaRepository<CategoryBook, Long>{
     List<CategoryBook> findAllByCategoryId(Long id);
+
+    List<CategoryBook> findAllByCategoryId(Long id, Pageable pageable);
 }

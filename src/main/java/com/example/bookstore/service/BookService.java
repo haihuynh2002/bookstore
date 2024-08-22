@@ -7,7 +7,6 @@ package com.example.bookstore.service;
 import com.example.bookstore.dto.BookDto;
 import com.example.bookstore.dto.CartDto;
 import com.example.bookstore.exception.BookAlreadyInCartException;
-import com.example.bookstore.model.AdminRole;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.model.CartBook;
 import com.example.bookstore.model.Category;
@@ -28,6 +27,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -110,6 +111,17 @@ public class BookService {
         }
     }
 
+    public List<BookDto> findAll(Pageable pageable) {
+        List<BookDto> books = br.findAll(pageable).stream()
+                .map(book -> modelMapper.map(book, BookDto.class))
+                .map(book -> {
+                    System.out.println(book.getTitle());
+                    return book;
+                })
+                .collect(Collectors.toList());
+        return books;
+    }
+
     public List<BookDto> findAll() {
         List<BookDto> books = br.findAll().stream()
                 .map(book -> modelMapper.map(book, BookDto.class))
@@ -137,8 +149,8 @@ public class BookService {
         return br.findAllByTitleContaining(query);
     }
 
-    public List<Book> searchByCategory(Long id) {
-        return catebr.findAllByCategoryId(id).stream()
+    public List<Book> searchByCategory(Long id, Pageable pageable) {
+        return catebr.findAllByCategoryId(id, pageable).stream()
                 .map(CategoryBook::getBook)
                 .collect(Collectors.toList());
     }

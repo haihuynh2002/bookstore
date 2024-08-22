@@ -29,7 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
         <!-- header section strats -->
         <header th:fragment="header" class="header_section">
-            <nav class="navbar navbar-expand-lg custom_nav-container">
+            <nav class="navbar navbar-expand-xl custom_nav-container">
                 <a class="navbar-brand" th:href="@{/home}">
                     <span>
                         BOOKSTORE
@@ -65,7 +65,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     </ul>
                     <div  class="user_option">
-                        <form class="form-inline mx-4" th:action="@{/book/search}" method="get">
+                        <form class="form-inline mx-4 flex-nowrap" th:action="@{/book/search}" method="get">
                             <input id="query" name="query" class="form-control mr-sm-2" type="text" placeholder="Search...">
                             <button class="btn btn-secondary" type="submit">
                                 <i class="fa fa-search"></i>
@@ -73,7 +73,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </form>
                         <a th:href="@{/cart}">
                             <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                            <span class="badge badge-pill badge-secondary" th:text="${cartIcon.quantity}"></span>
                         </a>
+                            
                         <div class="dropdown">
                             <a class="dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

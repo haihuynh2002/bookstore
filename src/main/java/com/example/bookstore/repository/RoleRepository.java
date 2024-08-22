@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
  * @author infoh
  */
 public interface RoleRepository extends JpaRepository<Role, Long>{
-    Optional<Role>findByName(String name);
+    Optional<Role> findByName(String name);
     @Query("INSERT INTO Role(name) VALUES(:name)")
     void createRoleByName(String name);
 }

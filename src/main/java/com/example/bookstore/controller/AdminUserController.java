@@ -5,9 +5,13 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.dto.UserDto;
+import com.example.bookstore.model.Role;
+import com.example.bookstore.model.User;
+import com.example.bookstore.service.RoleService;
 import com.example.bookstore.service.UserService;
 import java.io.IOException;
 import java.util.List;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +36,12 @@ public class AdminUserController {
     @Autowired
     UserService us;
 
+    @Autowired
+    RoleService rs;
+
+    @Autowired
+    ModelMapper modelMapper;
+
     @GetMapping
     public String users(Model model) {
         List<UserDto> users = us.findAll();
@@ -42,7 +52,9 @@ public class AdminUserController {
     @GetMapping("/create")
     public String create(Model model) {
         UserDto userDto = new UserDto();
+        List<Role> allRoles = rs.findAll();
         model.addAttribute("user", userDto);
+        model.addAttribute("allRoles", allRoles);
         return "admin/create-user";
     }
 
@@ -51,19 +63,23 @@ public class AdminUserController {
             @ModelAttribute("user") UserDto userDto) throws IOException {
         String imageUrl = us.saveImage(file);
         userDto.setImageUrl(imageUrl);
-        us.create(userDto);
+
+        User user = modelMapper.map(userDto, User.class);
+        us.create(user);
         return "redirect:/admin/user";
     }
 
     @GetMapping("/update/{id}")
     public String update(@PathVariable("id") Long id, Model model) {
         UserDto userDto = us.findUserDtoById(id);
+        List<Role> allRoles = rs.findAll();
         model.addAttribute("user", userDto);
+        model.addAttribute("allRoles", allRoles);
         return "admin/update-user";
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam("image") MultipartFile file, 
+    public String update(@RequestParam("image") MultipartFile file,
             @ModelAttribute("user") UserDto userDto) throws IOException {
         if (file != null) {
             String imageUrl = us.saveImage(file);

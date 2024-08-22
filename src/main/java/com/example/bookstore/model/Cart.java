@@ -50,8 +50,6 @@ public class Cart {
 
     @Transient
     public int getQuantity() {
-        return cartBooks.stream()
-                .mapToInt(line -> line.getQuantity())
-                .sum();
+        return cartBooks.size();
     }
 }

@@ -4,9 +4,7 @@
  */
 package com.example.bookstore.model;
 
-import com.example.bookstore.dto.AddressDto;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +18,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,6 +32,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -50,10 +50,9 @@ public class User {
     private Long id;
     private String email;
     private String password;
-
     private String firstName;
     private String lastName;
-    private Integer age;
+    private LocalDate birthday;
     private String gender;
     private String phone;
     private boolean enabled = false;
@@ -62,6 +61,14 @@ public class User {
     private String imageUrl;
     private String token;
     private Date expiration;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
@@ -74,6 +81,11 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
+    
+    public void addRole(Role role) {
+        this.getRoles().add(role);
+        role.getUsers().add(this);
+    }
 
     public void addCart(Cart cart) {
         this.setCart(cart);

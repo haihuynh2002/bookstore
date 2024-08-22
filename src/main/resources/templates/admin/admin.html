@@ -52,9 +52,7 @@
                                             <a th:href="@{/admin/admin/update/{id}(id=${admin.id})}">
                                                 <button class="btn btn-primary">Edit</button>
                                             </a>
-                                            <a th:href="@{/admin/admin/role/{id}(id=${admin.id})}">
-                                                <button class="btn btn-success">Roles</button>
-                                            </a>
+                                            
                                             <form th:action="@{/admin/admin/delete/{id}(id=${admin.id})}" method="post">
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>

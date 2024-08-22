@@ -29,7 +29,7 @@
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-stripped">
-                                <thead class="thead-light">
+                                <thead class="thead-light text-center">
                                     <tr>
                                         <th>ID</th>
                                         <th>Email</th>
@@ -37,6 +37,7 @@
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Phone</th>
+                                        <th>Roles</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -45,16 +46,25 @@
                                         <td th:text="${user.id}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td>[[${user.firstName}]] [[${user.lastName}]]</td>
-                                        <td th:text="${user.age}"></td>
+                                        <td th:text="${user.birthday}"></td>
                                         <td th:text="${user.gender}"></td>
                                         <td th:text="${user.phone}"></td>
-                                        <td class="d-flex justify-content-around">
-                                            <a th:href="@{/admin/user/update/{id}(id=${user.id})}">
-                                                <button class="btn btn-primary">Edit</button>
-                                            </a>
-                                            <form th:action="@{/admin/user/delete/{id}(id=${user.id})}" method="post">
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                        <td>
+                                            <p th:each="role: ${user.roles}" th:text="${role.name}"></p>
+                                        </td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <a th:href="@{/admin/user/update/{id}(id=${user.id})}">
+                                                        <button class="btn btn-primary">Edit</button>
+                                                    </a>
+                                                </div>
+                                                <div class="col">
+                                                    <form th:action="@{/admin/user/delete/{id}(id=${user.id})}" method="post">
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -39,7 +39,7 @@ public class Role {
     private String name;
     private String description;
     
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "roles")
     @JsonIgnore
-    private List<AdminRole> adminRoles =  new ArrayList<>();
+    private List<User> users =  new ArrayList<>();
 }

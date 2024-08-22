@@ -32,6 +32,10 @@ public class RoleService {
         return rr.findAll();
     }
     
+    public Role findByName(String name) {
+        return rr.findByName(name).orElseThrow(() -> new RuntimeException("role not found"));
+    }
+    
     public Role findById(Long id) {
         return rr.findById(id).orElseThrow(
                 () -> new RuntimeException("Role not found exception")
